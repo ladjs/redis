@@ -51,12 +51,13 @@
   },
   "keywords": [
     "agenda",
-    "redis",
+    "api",
     "bull",
     "cron",
     "cronjob",
     "crontab",
     "express",
+    "framework",
     "frequency",
     "frequent",
     "graceful",
@@ -71,18 +72,17 @@
     "mongo",
     "mongodb",
     "mongoose",
+    "mvc",
     "recur",
     "recurred",
     "recurring",
+    "redis",
     "redis",
     "reload",
     "scheduler",
     "scheduling",
     "setup",
-    "api",
-    "web",
-    "framework",
-    "mvc"
+    "web"
   ],
   "license": "MIT",
   "lint-staged": {
@@ -117,7 +117,6 @@
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "lint": "xo && remark . -qfo",
-    "precommit": "lint-staged && npm test",
     "test": "npm run lint && npm run test-coverage",
     "test-coverage": "cross-env NODE_ENV=test nyc ava"
   },

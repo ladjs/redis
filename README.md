@@ -38,10 +38,9 @@ yarn add @ladjs/redis
 
 ## Contributors
 
-| Name             | Website                    |
-| ---------------- | -------------------------- |
-| **Shaun Warman** | <https://shaunwarman.com>  |
-| **Nick Baugh**   | <http://niftylettuce.com/> |
+| Name           | Website                    |
+| -------------- | -------------------------- |
+| **Nick Baugh** | <http://niftylettuce.com/> |
 
 
 ## License
@@ -49,7 +48,7 @@ yarn add @ladjs/redis
 [MIT](LICENSE) © [Nick Baugh](http://niftylettuce.com/)
 
 
-##
+## 
 
 [npm]: https://www.npmjs.com/
 
