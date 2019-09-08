@@ -7,28 +7,7 @@ function getMeta(client) {
   };
 }
 
-function Redis(config = {}, logger = console, monitor = false) {
-  const client = new IORedis(config);
-  // https://github.com/luin/ioredis#monitor
-  if (monitor) {
-    client.monitor((err, monitor) => {
-      if (err) return logger.error(err, getMeta(client));
-      logger.debug('redis monitor established', {
-        ...getMeta(client),
-        monitor
-      });
-      monitor.on('monitor', (time, args, source, database) =>
-        logger.debug('redis monitor', {
-          ...getMeta(client),
-          time,
-          args,
-          source,
-          database
-        })
-      );
-    });
-  }
-
+function bindEvents(client, logger) {
   client.on('connect', () =>
     logger.debug('redis connection established', getMeta(client))
   );
@@ -45,6 +24,33 @@ function Redis(config = {}, logger = console, monitor = false) {
   client.on('end', () =>
     logger.debug('redis conection ended', getMeta(client))
   );
+}
+
+function Redis(config = {}, logger = console, monitor = false) {
+  const client = new IORedis(config);
+  // https://github.com/luin/ioredis#monitor
+  if (monitor) {
+    client.monitor((err, monitor) => {
+      if (err) return logger.error(err, getMeta(client));
+      logger.debug('redis monitor instance created', {
+        ...getMeta(client),
+        monitor
+      });
+      client._monitor = monitor;
+      monitor.on('monitor', (time, args, source, database) =>
+        logger.debug('redis monitor', {
+          ...getMeta(client),
+          time,
+          args,
+          source,
+          database
+        })
+      );
+      bindEvents(monitor, logger);
+    });
+  }
+
+  bindEvents(client);
   return client;
 }
 
