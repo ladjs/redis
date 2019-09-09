@@ -18,11 +18,20 @@ function bindEvents(client, logger) {
   client.on('close', () =>
     logger.debug('redis connection closed', getMeta(client))
   );
-  client.on('reconnecting', () =>
-    logger.debug('redis reconnecting', getMeta(client))
+  client.on('reconnecting', time =>
+    logger.debug('redis reconnecting', { time, ...getMeta(client) })
   );
   client.on('end', () =>
-    logger.debug('redis conection ended', getMeta(client))
+    logger.debug('redis connection ended', getMeta(client))
+  );
+  client.on('+node', () =>
+    logger.debug('redis node connected', getMeta(client))
+  );
+  client.on('-node', () =>
+    logger.debug('redis node disconnected', getMeta(client))
+  );
+  client.on('node error', (err, address) =>
+    logger.error(err, { address, ...getMeta(client) })
   );
 }
 
