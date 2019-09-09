@@ -59,7 +59,7 @@ function Redis(config = {}, logger = console, monitor = false) {
     });
   }
 
-  bindEvents(client);
+  bindEvents(client, logger);
   return client;
 }
 
