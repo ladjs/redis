@@ -25,9 +25,10 @@
   "devDependencies": {
     "@commitlint/cli": "^8.1.0",
     "@commitlint/config-conventional": "^8.1.0",
-    "ava": "^2.3.0",
+    "ava": "^3.10.1",
     "codecov": "^3.5.0",
     "cross-env": "^5.2.1",
+    "delay": "^4.4.0",
     "eslint": "6.3.0",
     "eslint-config-xo-lass": "^1.0.3",
     "eslint-plugin-node": "^10.0.0",
@@ -37,6 +38,7 @@
     "nyc": "^14.1.1",
     "remark-cli": "^7.0.0",
     "remark-preset-github": "^0.0.16",
+    "sinon": "^9.0.2",
     "xo": "^0.24.0"
   },
   "engines": {
