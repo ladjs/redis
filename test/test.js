@@ -5,23 +5,23 @@ const sinon = require('sinon');
 const IORedis = require('ioredis');
 const Redis = require('..');
 
-test.beforeEach(t => {
+test.beforeEach((t) => {
   t.context.logger = {
     debug: () => {},
     error: () => {}
   };
 });
 
-test('creates Redis', t => {
+test('creates Redis', (t) => {
   const redis = new Redis();
   t.is(typeof redis, 'object');
 });
 
-test('creates Redis with logger', async t => {
+test('creates Redis with logger', async (t) => {
   t.plan(10);
 
   const { logger } = t.context;
-  logger.debug = message => {
+  logger.debug = (message) => {
     switch (message) {
       case 'redis connection established':
         t.true(true);
@@ -48,7 +48,7 @@ test('creates Redis with logger', async t => {
     }
   };
 
-  logger.error = message => {
+  logger.error = (message) => {
     switch (message) {
       case 'node error':
         t.true(true);
@@ -74,11 +74,11 @@ test('creates Redis with logger', async t => {
   await delay(1000);
 });
 
-test('creates Redis with monitor', async t => {
+test('creates Redis with monitor', async (t) => {
   t.plan(13);
 
   const { logger } = t.context;
-  logger.debug = message => {
+  logger.debug = (message) => {
     // console.debug(message);
     switch (message) {
       case 'redis monitor instance created':
@@ -112,7 +112,7 @@ test('creates Redis with monitor', async t => {
     }
   };
 
-  logger.error = message => {
+  logger.error = (message) => {
     // console.error(message);
     switch (message) {
       case 'node error':
@@ -140,7 +140,7 @@ test('creates Redis with monitor', async t => {
   await delay(1000);
 });
 
-test('getMeta > empty status', t => {
+test('getMeta > empty status', (t) => {
   t.plan(1);
 
   const { logger } = t.context;
@@ -154,11 +154,11 @@ test('getMeta > empty status', t => {
   redis.emit('connect');
 });
 
-test.serial('errors when creating monitor', t => {
+test.serial('errors when creating monitor', (t) => {
   t.plan(1);
 
   const { logger } = t.context;
-  logger.error = message => {
+  logger.error = (message) => {
     if (message === 'error') t.true(true);
   };
 

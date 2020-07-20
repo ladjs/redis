@@ -14,11 +14,11 @@ function bindEvents(client, logger) {
   client.on('ready', () =>
     logger.debug('redis connection ready', getMeta(client))
   );
-  client.on('error', err => logger.error(err, getMeta(client)));
+  client.on('error', (err) => logger.error(err, getMeta(client)));
   client.on('close', () =>
     logger.debug('redis connection closed', getMeta(client))
   );
-  client.on('reconnecting', time =>
+  client.on('reconnecting', (time) =>
     logger.debug('redis reconnecting', { time, ...getMeta(client) })
   );
   client.on('end', () =>
