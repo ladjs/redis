@@ -35,8 +35,16 @@ function bindEvents(client, logger) {
   );
 }
 
-function Redis(config = {}, logger = console, monitor = false) {
+// eslint-disable-next-line max-params
+function Redis(
+  config = {},
+  logger = console,
+  monitor = false,
+  maxListeners = 15,
+  _bindEvents = false
+) {
   const client = new IORedis(config);
+  client.setMaxListeners(maxListeners);
   // https://github.com/luin/ioredis#monitor
   if (monitor) {
     client.monitor((err, monitor) => {
@@ -59,7 +67,7 @@ function Redis(config = {}, logger = console, monitor = false) {
     });
   }
 
-  bindEvents(client, logger);
+  if (_bindEvents) bindEvents(client, logger);
   return client;
 }
 
