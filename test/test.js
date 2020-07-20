@@ -24,25 +24,25 @@ test('creates Redis with logger', async (t) => {
   logger.debug = (message) => {
     switch (message) {
       case 'redis connection established':
-        t.true(true);
+        t.pass();
         break;
       case 'redis connection ready':
-        t.true(true);
+        t.pass();
         break;
       case 'redis connection closed':
-        t.true(true);
+        t.pass();
         break;
       case 'redis reconnecting':
-        t.true(true);
+        t.pass();
         break;
       case 'redis connection ended':
-        t.true(true);
+        t.pass();
         break;
       case 'redis node connected':
-        t.true(true);
+        t.pass();
         break;
       case 'redis node disconnected':
-        t.true(true);
+        t.pass();
         break;
       default:
     }
@@ -51,10 +51,10 @@ test('creates Redis with logger', async (t) => {
   logger.error = (message) => {
     switch (message) {
       case 'node error':
-        t.true(true);
+        t.pass();
         break;
       case 'error':
-        t.true(true);
+        t.pass();
         break;
       default:
     }
@@ -82,31 +82,31 @@ test('creates Redis with monitor', async (t) => {
     // console.debug(message);
     switch (message) {
       case 'redis monitor instance created':
-        t.true(true);
+        t.pass();
         break;
       case 'redis monitor':
-        t.true(true);
+        t.pass();
         break;
       case 'redis connection established':
-        t.true(true);
+        t.pass();
         break;
       case 'redis connection ready':
-        t.true(true);
+        t.pass();
         break;
       case 'redis connection closed':
-        t.true(true);
+        t.pass();
         break;
       case 'redis reconnecting':
-        t.true(true);
+        t.pass();
         break;
       case 'redis connection ended':
-        t.true(true);
+        t.pass();
         break;
       case 'redis node connected':
-        t.true(true);
+        t.pass();
         break;
       case 'redis node disconnected':
-        t.true(true);
+        t.pass();
         break;
       default:
     }
@@ -116,10 +116,10 @@ test('creates Redis with monitor', async (t) => {
     // console.error(message);
     switch (message) {
       case 'node error':
-        t.true(true);
+        t.pass();
         break;
       case 'error':
-        t.true(true);
+        t.pass();
         break;
       default:
     }
@@ -146,7 +146,7 @@ test('getMeta > empty status', (t) => {
   const { logger } = t.context;
   logger.debug = (...args) => {
     // console.debug(args);
-    if (args[1].status === '[empty]') t.true(true);
+    if (args[1].status === '[empty]') t.pass();
   };
 
   const redis = new Redis({}, logger);
@@ -159,7 +159,7 @@ test.serial('errors when creating monitor', (t) => {
 
   const { logger } = t.context;
   logger.error = (message) => {
-    if (message === 'error') t.true(true);
+    if (message === 'error') t.pass();
   };
 
   const monitor = sinon.stub(IORedis.prototype, 'monitor').returns(() => {});
@@ -170,4 +170,49 @@ test.serial('errors when creating monitor', (t) => {
 
   sinon.assert.called(monitor);
   sinon.restore();
+});
+
+test('creates Redis with logger and does not bind events', async (t) => {
+  const { logger } = t.context;
+  logger.debug = (message) => {
+    switch (message) {
+      case 'redis connection established':
+        t.fail();
+        break;
+      case 'redis connection ready':
+        t.fail();
+        break;
+      case 'redis connection closed':
+        t.fail();
+        break;
+      case 'redis reconnecting':
+        t.fail();
+        break;
+      case 'redis connection ended':
+        t.fail();
+        break;
+      case 'redis node connected':
+        t.fail();
+        break;
+      case 'redis node disconnected':
+        t.fail();
+        break;
+      default:
+    }
+  };
+
+  const redis = await new Redis({}, logger, undefined, undefined, false);
+
+  t.is(typeof redis, 'object');
+  redis.monitor();
+  await delay(1000);
+  redis.emit('reconnecting');
+  redis.emit('+node');
+  redis.emit('-node');
+  redis.emit('node error', 'node error');
+  t.throws(() => {
+    redis.emit('error', 'error');
+  });
+  redis.disconnect();
+  await delay(1000);
 });

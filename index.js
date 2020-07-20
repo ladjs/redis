@@ -41,7 +41,7 @@ function Redis(
   logger = console,
   monitor = false,
   maxListeners = 15,
-  _bindEvents = false
+  _bindEvents = true
 ) {
   const client = new IORedis(config);
   client.setMaxListeners(maxListeners);
