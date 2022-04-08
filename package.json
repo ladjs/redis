@@ -20,7 +20,7 @@
     "Nick Baugh <niftylettuce@gmail.com> (http://niftylettuce.com/)"
   ],
   "dependencies": {
-    "ioredis": "^4.17.3"
+    "ioredis": "^4.28.5"
   },
   "devDependencies": {
     "@commitlint/cli": "^9.1.1",
