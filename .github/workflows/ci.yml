@@ -13,13 +13,20 @@ jobs:
           - 14
           - 16
           - 18
-    name: Node ${{ matrix.node_version }} on ${{ matrix.os }}
+        redis_version:
+          - 6
+          - 7
+    name: Node ${{ matrix.node_version }} on ${{ matrix.os }} with Redis ${{matrix.redis_version}}
     steps:
       - uses: actions/checkout@v3
       - name: Setup node
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node_version }}
+      - name: Start redis
+        uses: supercharge/redis-github-action@1.4.0
+        with:
+          redis_version: ${{ matrix.redis_version }}
       - name: Install dependencies
         run: npm install
       - name: Run tests
