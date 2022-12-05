@@ -3,54 +3,41 @@
   "description": "Redis for Lad",
   "version": "1.0.7",
   "author": "Nick Baugh <niftylettuce@gmail.com> (http://niftylettuce.com/)",
-  "ava": {
-    "failFast": true,
-    "verbose": true
-  },
   "bugs": {
     "url": "https://github.com/ladjs/redis/issues",
     "email": "niftylettuce@gmail.com"
-  },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
   },
   "contributors": [
     "Nick Baugh <niftylettuce@gmail.com> (http://niftylettuce.com/)"
   ],
   "dependencies": {
-    "ioredis": "^4.17.3"
+    "ioredis": "^5.2.4"
   },
   "devDependencies": {
-    "@commitlint/cli": "^9.1.1",
-    "@commitlint/config-conventional": "^9.1.1",
-    "ava": "^3.10.1",
-    "codecov": "^3.7.1",
-    "cross-env": "^7.0.2",
-    "delay": "^4.4.0",
-    "eslint": "7.5.0",
-    "eslint-config-xo-lass": "^1.0.3",
+    "@commitlint/cli": "^17.3.0",
+    "@commitlint/config-conventional": "^17.3.0",
+    "ava": "^5.1.0",
+    "cross-env": "^7.0.3",
+    "delay": "^5.0.0",
+    "eslint": "8.29.0",
+    "eslint-config-xo-lass": "^2.0.1",
     "eslint-plugin-node": "^11.1.0",
-    "fixpack": "^3.0.6",
-    "husky": "^4.2.5",
-    "lint-staged": "^10.2.11",
+    "fixpack": "^4.0.0",
+    "husky": "^8.0.2",
+    "lint-staged": "^13.1.0",
     "nyc": "^15.1.0",
-    "remark-cli": "^8.0.1",
-    "remark-preset-github": "^2.0.2",
-    "sinon": "^9.0.2",
-    "xo": "^0.32.1"
+    "remark-cli": "^11.0.0",
+    "remark-preset-github": "^4.0.4",
+    "sinon": "^15.0.0",
+    "xo": "^0.53.1"
   },
   "engines": {
-    "node": ">=8.3"
+    "node": ">=14"
   },
+  "files": [
+    "index.js"
+  ],
   "homepage": "https://github.com/ladjs/redis",
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged && npm test",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
-  },
   "keywords": [
     "agenda",
     "api",
@@ -87,49 +74,18 @@
     "web"
   ],
   "license": "MIT",
-  "lint-staged": {
-    "*.js": [
-      "xo --fix",
-      "git add"
-    ],
-    "*.md": [
-      "remark . -qfo",
-      "git add"
-    ],
-    "package.json": [
-      "fixpack",
-      "git add"
-    ]
-  },
   "main": "index.js",
-  "prettier": {
-    "singleQuote": true,
-    "bracketSpacing": true,
-    "trailingComma": "none"
-  },
   "publishConfig": {
     "access": "public"
-  },
-  "remarkConfig": {
-    "plugins": [
-      "preset-github"
-    ]
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/ladjs/redis"
   },
   "scripts": {
-    "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
-    "lint": "xo && remark . -qfo",
-    "test": "npm run lint && npm run test-coverage",
-    "test-coverage": "cross-env NODE_ENV=test nyc ava"
-  },
-  "xo": {
-    "prettier": true,
-    "space": true,
-    "extends": [
-      "xo-lass"
-    ]
+    "lint": "xo --fix && remark . -qfo && fixpack",
+    "prepare": "husky install",
+    "pretest": "npm run lint",
+    "test": "cross-env NODE_ENV=test nyc ava"
   }
 }

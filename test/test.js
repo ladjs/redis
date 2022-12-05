@@ -7,8 +7,8 @@ const Redis = require('..');
 
 test.beforeEach((t) => {
   t.context.logger = {
-    debug: () => {},
-    error: () => {}
+    debug() {},
+    error() {}
   };
 });
 
@@ -23,39 +23,57 @@ test('creates Redis with logger', async (t) => {
   const { logger } = t.context;
   logger.debug = (message) => {
     switch (message) {
-      case 'redis connection established':
+      case 'redis connection established': {
         t.pass();
         break;
-      case 'redis connection ready':
+      }
+
+      case 'redis connection ready': {
         t.pass();
         break;
-      case 'redis connection closed':
+      }
+
+      case 'redis connection closed': {
         t.pass();
         break;
-      case 'redis reconnecting':
+      }
+
+      case 'redis reconnecting': {
         t.pass();
         break;
-      case 'redis connection ended':
+      }
+
+      case 'redis connection ended': {
         t.pass();
         break;
-      case 'redis node connected':
+      }
+
+      case 'redis node connected': {
         t.pass();
         break;
-      case 'redis node disconnected':
+      }
+
+      case 'redis node disconnected': {
         t.pass();
         break;
+      }
+
       default:
     }
   };
 
   logger.error = (message) => {
     switch (message) {
-      case 'node error':
+      case 'node error': {
         t.pass();
         break;
-      case 'error':
+      }
+
+      case 'error': {
         t.pass();
         break;
+      }
+
       default:
     }
   };
@@ -79,48 +97,70 @@ test('creates Redis with monitor', async (t) => {
 
   const { logger } = t.context;
   logger.debug = (message) => {
-    // console.debug(message);
+    // Console.debug(message);
     switch (message) {
-      case 'redis monitor instance created':
+      case 'redis monitor instance created': {
         t.pass();
         break;
-      case 'redis monitor':
+      }
+
+      case 'redis monitor': {
         t.pass();
         break;
-      case 'redis connection established':
+      }
+
+      case 'redis connection established': {
         t.pass();
         break;
-      case 'redis connection ready':
+      }
+
+      case 'redis connection ready': {
         t.pass();
         break;
-      case 'redis connection closed':
+      }
+
+      case 'redis connection closed': {
         t.pass();
         break;
-      case 'redis reconnecting':
+      }
+
+      case 'redis reconnecting': {
         t.pass();
         break;
-      case 'redis connection ended':
+      }
+
+      case 'redis connection ended': {
         t.pass();
         break;
-      case 'redis node connected':
+      }
+
+      case 'redis node connected': {
         t.pass();
         break;
-      case 'redis node disconnected':
+      }
+
+      case 'redis node disconnected': {
         t.pass();
         break;
+      }
+
       default:
     }
   };
 
   logger.error = (message) => {
-    // console.error(message);
+    // Console.error(message);
     switch (message) {
-      case 'node error':
+      case 'node error': {
         t.pass();
         break;
-      case 'error':
+      }
+
+      case 'error': {
         t.pass();
         break;
+      }
+
       default:
     }
   };
@@ -145,8 +185,10 @@ test('getMeta > empty status', (t) => {
 
   const { logger } = t.context;
   logger.debug = (...args) => {
-    // console.debug(args);
-    if (args[1].status === '[empty]') t.pass();
+    // Console.debug(args);
+    if (args[1].status === '[empty]') {
+      t.pass();
+    }
   };
 
   const redis = new Redis({}, logger);
@@ -159,7 +201,9 @@ test.serial('errors when creating monitor', (t) => {
 
   const { logger } = t.context;
   logger.error = (message) => {
-    if (message === 'error') t.pass();
+    if (message === 'error') {
+      t.pass();
+    }
   };
 
   const monitor = sinon.stub(IORedis.prototype, 'monitor').returns(() => {});
@@ -176,27 +220,41 @@ test('creates Redis with logger and does not bind events', async (t) => {
   const { logger } = t.context;
   logger.debug = (message) => {
     switch (message) {
-      case 'redis connection established':
+      case 'redis connection established': {
         t.fail();
         break;
-      case 'redis connection ready':
+      }
+
+      case 'redis connection ready': {
         t.fail();
         break;
-      case 'redis connection closed':
+      }
+
+      case 'redis connection closed': {
         t.fail();
         break;
-      case 'redis reconnecting':
+      }
+
+      case 'redis reconnecting': {
         t.fail();
         break;
-      case 'redis connection ended':
+      }
+
+      case 'redis connection ended': {
         t.fail();
         break;
-      case 'redis node connected':
+      }
+
+      case 'redis node connected': {
         t.fail();
         break;
-      case 'redis node disconnected':
+      }
+
+      case 'redis node disconnected': {
         t.fail();
         break;
+      }
+
       default:
     }
   };
